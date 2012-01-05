@@ -1,3 +1,16 @@
-= haystack =
+# haystack
 
-All-public file sharing made as easy as possible.
+Share files with your mom. Easy as pie. Mom pie.
+
+## Usage
+
+```bash
+lein deps
+lein run
+```
+
+## License
+
+Copyright (C) 2012 Steven Deobald
+
+Distributed under the Eclipse Public License, the same as Clojure.
