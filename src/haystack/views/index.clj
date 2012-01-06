@@ -8,22 +8,25 @@
 (defpage "/" []
   (common/layout
    [:p "oh hey"]
-   (form-to [:post "/drop"]
-            (file-upload "Your file:")
-            (submit-button "drop"))
+   [:br]
+
+   [:form {:action "/drop" :method "post" :enctype "multipart/form-data"} 
+    (file-upload "file:")
+    (submit-button "drop")]
+   [:br]
+
    (form-to [:post "/find"]
             (text-field "what")
             (submit-button "find"))))
 
-(defn upload-file
-  [data]
-  (:tempfile data)
-  ;;(io/copy (file :tempfile) (io/file-str "file.out"))
-  )
+(defn upload-file [data]
+  (io/copy (:tempfile data) (io/file "file.out")))
 
-(defpage [:post "/drop"] [params]
-  ;;{:keys [file]}
-  (common/layout
-   [:pre (str "zig" ;;(keys params)
-              ;;(upload-file file)
-              )]))
+(defpage [:post "/drop"] params
+  (let [data ((keyword "file:") params)]
+    (common/layout
+     [:pre 
+      ;;(str "zig: " (keys params))
+      ]
+     (upload-file data)
+     )))
