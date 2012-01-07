@@ -5,23 +5,24 @@
             [clj-time.format :as time-format])
   (:use [noir.core :only [defpage]]
         [hiccup.core :only [html]]
+        [hiccup.page-helpers :only [image]]
         [hiccup.form-helpers :only [form-to file-upload text-field submit-button]]))
 
 (def upload-label "file:")
 
 (defpage "/" []
   (common/layout
-   [:p "oh hey"]
-   [:br]
-
-   [:form {:action "/drop" :method "post" :enctype "multipart/form-data"} 
-    (file-upload upload-label)
-    (submit-button "drop")]
-   [:br]
-
-   (form-to [:post "/find"]
-            (text-field "what")
-            (submit-button "find"))))
+   [:div
+    [:div#dropper
+     [:form {:action "/drop" :method "post" :enctype "multipart/form-data"}
+      (file-upload upload-label)
+      (submit-button "drop")]]
+    [:div#logo
+     (image "/img/haystack.jpg" "HAYSTACK!")]
+    [:div#finder
+     (form-to [:post "/find"]
+              (text-field "what")
+              (submit-button "find"))]]))
 
 (defn timestamp []
   (time-format/unparse (time-format/formatters :basic-date-time-no-ms) (time/now)))
@@ -41,4 +42,3 @@
      [:div
       [:div "Uploaded!"]
       [:div [:a {:href "/"} "Go back?"]]])))
-
