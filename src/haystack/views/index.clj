@@ -15,14 +15,14 @@
    [:div
     [:div#dropper
      [:form {:action "/drop" :method "post" :enctype "multipart/form-data"}
-      (file-upload upload-label)
-      (submit-button "drop")]]
+      [:div (file-upload upload-label)]
+      [:div (submit-button {:class "btn primary"} "drop")]]]
     [:div#logo
      (image "/img/haystack.jpg" "HAYSTACK!")]
     [:div#finder
      (form-to [:post "/find"]
-              (text-field "what")
-              (submit-button "find"))]]))
+              [:div (text-field "what")]
+              [:div (submit-button {:class "btn primary"} "find")])]]))
 
 (defn timestamp []
   (time-format/unparse (time-format/formatters :basic-date-time-no-ms) (time/now)))
