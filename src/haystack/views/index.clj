@@ -1,5 +1,6 @@
 (ns haystack.views.index
-  (:require [haystack.views.common :as common]
+  (:require [haystack.views.layout :as layout]
+            [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.java.shell :as shell]
             [clj-time.core :as time]
@@ -7,12 +8,13 @@
   (:use [noir.core :only [defpage]]
         [hiccup.core :only [html]]
         [hiccup.page-helpers :only [image]]
-        [hiccup.form-helpers :only [form-to file-upload text-field submit-button]]))
+        [hiccup.form-helpers :only [form-to file-upload text-field submit-button]])
+  (:import [java.lang String]))
 
 (def upload-label "file:")
 
 (defpage "/" []
-  (common/layout
+  (layout/layout
    [:div
     [:div#dropper
      [:form {:action "/drop" :method "post" :enctype "multipart/form-data"}
@@ -39,18 +41,24 @@
 (defpage [:post "/drop"] params
   (let [data ((keyword upload-label) params)
         result (upload-file data)]
-    (common/layout
+    (layout/layout
      [:div
       [:div "Uploaded!"]
       [:div [:a {:href "/"} "Go back?"]]])))
 
+(defn files []
+  (:out (shell/sh "ls" "-1" "files")))
+
 (defn find-files [what]
-  (shell/sh "find" "files" "-name" (str "'*" what "*'")))
+  (s/split)
+  ;;(shell/sh "find" "files" "-name" (str "'*" what "*'"))
+  )
 
 (defpage [:post "/find"] {what :what}
   (let [results (find-files what)]
-    (common/layout
+    (layout/layout
      [:div
       [:div "Found:"]
       (for [r results]
         [:div r])])))
+

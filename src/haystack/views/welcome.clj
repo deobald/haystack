@@ -1,8 +1,8 @@
 (ns haystack.views.welcome
-  (:require [haystack.views.common :as common])
+  (:require [haystack.views.layout :as layout])
   (:use [noir.core :only [defpage]]
         [hiccup.core :only [html]]))
 
 (defpage "/welcome" []
-  (common/layout
+  (layout/layout
    [:p "Welcome to haystack"]))
