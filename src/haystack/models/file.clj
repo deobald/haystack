@@ -5,6 +5,7 @@
             [clojure.string :as s]))
 
 (def upload-label "file:")
+(def upload-dir "files")
 
 (defn timestamp []
   (time-format/unparse (time-format/formatters :basic-date-time-no-ms) (time/now)))
@@ -16,7 +17,7 @@
                             :filename \"examples.desktop\"}"
   [data]
   (io/copy (:tempfile data)
-           (io/file (str (timestamp) "-" (:filename data)))))
+           (io/file (str upload-dir "/" (timestamp) "-" (:filename data)))))
 
 (defn files []
   ;;[clojure.java.shell :as shell]
