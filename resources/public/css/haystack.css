@@ -1,19 +1,31 @@
 
-div#dropper {
-    float: left;
+#dropper {
+    width: 50%;
 }
 
-div#logo {
-    float: left;
+#finder {
+    width: 50%;
+}
+
+.file-list {
+    float: right;
+}
+
+.file {
+    margin: 4px;
+    padding: 4px;
+    background-color: #4d82d2;
+}
+
+input[type="text"] {
+    font-size: 32px;
 }
 
 button, input[type="button"], input[type="reset"], input[type="submit"] {
-    cursor: pointer;
     -webkit-appearance: button;
 }
 
 .btn {
-    cursor: pointer;
     display: inline-block;
     background-color: #E6E6E6;
     background-repeat: no-repeat;
