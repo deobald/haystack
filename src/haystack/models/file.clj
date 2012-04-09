@@ -2,7 +2,8 @@
   (:require [clj-time.core :as time]
             [clj-time.format :as time-format]
             [clojure.java.io :as io]
-            [clojure.string :as s]))
+            [clojure.string :as s])
+  (:import [java.io File]))
 
 (def upload-label "file:")
 (def upload-dir "files")
@@ -17,14 +18,17 @@
                             :filename \"examples.desktop\"}"
   [data]
   (io/copy (:tempfile data)
-           (io/file (str upload-dir "/" (timestamp) "-" (:filename data)))))
+           (io/file (str upload-dir
+                         "/"
+                         (timestamp)
+                         "-"
+                         (:filename data)))))
 
-(defn files []
-  ;;[clojure.java.shell :as shell]
-  ;;(:out (shell/sh "ls" "-1" "files"))
-  )
+(defn ls []
+  (.list (File. upload-dir)))
+
+(defn name-like [what]
+  (fn [f] (.contains f what)))
 
 (defn find [what]
-  (s/split)
-  ;;(shell/sh "find" "files" "-name" (str "'*" what "*'"))
-  )
+  (filter (name-like what) (ls)))
